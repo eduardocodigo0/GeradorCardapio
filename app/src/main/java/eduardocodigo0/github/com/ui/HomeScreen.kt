@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -156,14 +157,7 @@ fun HomeScreen(
                     if (pdfState is PdfGenerationState.Generating) {
                         CircularProgressIndicator(
                             color = Color.White,
-                            modifier = Modifier.height(24.dp)
-                        )
-                        Spacer(modifier = Modifier.width(12.dp))
-                        Text(
-                            text = "Gerando PDF...",
-                            color = Color.White,
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 16.sp
+                            modifier = Modifier.size(24.dp)
                         )
                     } else {
                         Icon(
@@ -171,14 +165,14 @@ fun HomeScreen(
                             contentDescription = null,
                             tint = Color.White
                         )
-                        Spacer(modifier = Modifier.width(10.dp))
-                        Text(
-                            text = "GERAR PDF DO CARDÁPIO (2 PÁGINAS A4)",
-                            color = Color.White,
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 15.sp
-                        )
                     }
+                    Spacer(modifier = Modifier.width(10.dp))
+                    Text(
+                        text = "GERAR PDF DO CARDÁPIO (2 PÁGINAS A4)",
+                        color = Color.White,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 15.sp
+                    )
                 }
             }
 

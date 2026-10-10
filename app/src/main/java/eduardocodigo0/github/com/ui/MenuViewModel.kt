@@ -9,6 +9,7 @@ import eduardocodigo0.github.com.data.MenuData
 import eduardocodigo0.github.com.data.MenuItem
 import eduardocodigo0.github.com.data.MenuRepository
 import eduardocodigo0.github.com.pdf.PdfMenuGenerator
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -85,6 +86,7 @@ class MenuViewModel(application: Application) : AndroidViewModel(application) {
     fun generatePdf() {
         viewModelScope.launch {
             _pdfState.value = PdfGenerationState.Generating
+                delay(1500)
             try {
                 val outputDir = File(getApplication<Application>().cacheDir, "generated_pdfs")
                 if (!outputDir.exists()) outputDir.mkdirs()
