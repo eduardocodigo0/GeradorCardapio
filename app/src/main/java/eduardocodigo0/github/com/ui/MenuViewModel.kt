@@ -13,6 +13,8 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import kotlinx.coroutines.launch
 import java.io.File
 
@@ -76,13 +78,14 @@ class MenuViewModel(application: Application) : AndroidViewModel(application) {
     fun generatePdf() {
         viewModelScope.launch {
             _pdfState.value = PdfGenerationState.Generating
-                delay(1500)
             try {
-                val outputDir = File(getApplication<Application>().cacheDir, "generated_pdfs")
-                if (!outputDir.exists()) outputDir.mkdirs()
-                val outputFile = File(outputDir, "Cardapio_DokasLanches.pdf")
-                pdfGenerator.generatePdf(menuData.value, outputFile)
-                _pdfState.value = PdfGenerationState.Success(outputFile)
+                withContext(Dispatchers.IO) {
+                    val outputDir = File(getApplication<Application>().cacheDir, "generated_pdfs")
+                    if (!outputDir.exists()) outputDir.mkdirs()
+                    val outputFile = File(outputDir, "Cardapio_DokasLanches.pdf")
+                    pdfGenerator.generatePdf(menuData.value, outputFile)
+                    _pdfState.value = PdfGenerationState.Success(outputFile)
+                }
             } catch (e: Exception) {
                 e.printStackTrace()
                 _pdfState.value = PdfGenerationState.Error(e.message ?: "Erro ao gerar PDF")
