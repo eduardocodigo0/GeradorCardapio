@@ -6,7 +6,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.withContext
-import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import java.io.File
 
@@ -68,13 +67,6 @@ class MenuRepository(private val context: Context) {
             current.categories + category
         }
         saveMenuData(current.copy(categories = updatedList))
-    }
-
-    suspend fun deleteCategory(categoryId: String) {
-        val current = _menuDataFlow.value
-        val updatedCategories = current.categories.filter { it.id != categoryId }
-        val updatedItems = current.items.filter { it.categoryId != categoryId }
-        saveMenuData(current.copy(categories = updatedCategories, items = updatedItems))
     }
 
     suspend fun saveMenuItem(item: MenuItem) {

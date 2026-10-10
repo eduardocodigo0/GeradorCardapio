@@ -61,16 +61,6 @@ class MenuViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    fun deleteCategory(categoryId: String) {
-        viewModelScope.launch {
-            repository.deleteCategory(categoryId)
-            val currentData = menuData.value
-            if (_selectedCategoryId.value == categoryId) {
-                _selectedCategoryId.value = currentData.categories.firstOrNull { it.id != categoryId }?.id
-            }
-        }
-    }
-
     fun saveMenuItem(item: MenuItem) {
         viewModelScope.launch {
             repository.saveMenuItem(item)
